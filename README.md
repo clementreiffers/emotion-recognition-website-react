@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# emotion-recognition-website-react
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![reactjs](badges/react.svg)](https://badges.aleen42.com/src/react.svg)
+[![javascript](badges/javascript.svg)](https://badges.aleen42.com/src/javascript.svg)
 
-## Available Scripts
+try yourself our AI : https://clementreiffers.github.io/emotion-recognition-website-react/
 
-In the project directory, you can run:
+## Inspiration
 
-### `npm start`
+This project is inspired from another project : https://github.com/clementreiffers/emotion-recognition-website.
+The goal is the same, make a complete website to launch an AI able to recognize emotions.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The AI was trained by myself and friends in this project : https://github.com/clementreiffers/emotion_recognition_cnn/.
+N.B. There already is a website inside "emotion_recognition_cnn" but made with python and works only in server side. (We
+use the camera from the server) The goal of this old project wasn't doing an interface but only making a demo of our AI.
+There real interface of our project is here.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Launch the website
 
-### `npm test`
+you can directly go to the link : https://clementreiffers.github.io/emotion-recognition-website-react/ and accept using 
+the camera.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+if you want to launch the website yourself on your computer, there is below some steps to do it:
 
-### `npm run build`
+### `yarn install`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+in the first time, you have to install all requirements, so :
+- react
+- react-camera
+- tfjs (a portability of tensorflow of javascript, used to launch our AI)
+- blazeface (an AI used to recuperate faces on camera, and after analyse it)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `yarn run start`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+once you have installed all the requirements, you can type this command in the terminal.
+With this command, the website is compiled and the terminal will tell you when you will be able to launch it. 
+you will be local, so "localhost:3000" will work on your browser
 
-### `npm run eject`
+### `yarn run build`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+if you want an optimized version of your website, an example of a build is available in the gh-pages branch or this 
+repository. It is not necessary if you stay in local.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Sources 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- React : https://en.reactjs.org
+- Badges of the readme : https://github.com/aleen42/badges
+- tfjs : https://www.npmjs.com/package/@tensorflow/tfjs
+- blazeface : https://www.npmjs.com/package/@tensorflow-models/blazeface
