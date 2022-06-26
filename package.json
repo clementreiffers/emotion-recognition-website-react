@@ -1,0 +1,14 @@
+{
+  "name": "emotion-recognition-website-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/clementreiffers/emotion-recognition-website-react.git",
+  "author": "clementreiffers <reiffersclement@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@tensorflow-models/blazeface": "^0.0.7",
+    "create-react-app": "^5.0.1",
+    "prettier": "^2.7.1",
+    "react-webcam": "^7.0.1"
+  }
+}
