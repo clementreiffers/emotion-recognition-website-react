@@ -10,8 +10,8 @@ const App = (props) => {
   }, [webcamRef]);
 
   const videoConstraints = {
-    width: 1280,
-    height: 720,
+    width: 1920,
+    height: 1280,
     facingMode: "user",
   };
 
@@ -41,15 +41,12 @@ const App = (props) => {
 
   return (
     <>
-      <Webcam
-        audio={false}
-        height={720}
-        ref={webcamRef}
-        screenshotFormat="image/jpeg"
-        width={1280}
-        videoConstraints={videoConstraints}
+      <Webcam audio={false} ref={webcamRef} width={0} height={0} />
+      <canvas
+        ref={canvasRef}
+        width={videoConstraints.width}
+        height={videoConstraints.height}
       />
-      <canvas ref={canvasRef} />
     </>
   );
 };
