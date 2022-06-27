@@ -1,5 +1,15 @@
-import "./stylesheet/App.css";
+import React from "react";
+import WebCam from "react-camera";
 
-const App = () => {};
+const Canvas = (props) => {
+  return (
+    <>
+      <div>
+        <canvas></canvas>
+        <WebCam></WebCam>
+      </div>
+    </>
+  );
+};
 
-export default App;
+export default Canvas;
