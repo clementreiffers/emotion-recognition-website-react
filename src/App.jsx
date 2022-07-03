@@ -1,11 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import Webcam from "react-webcam";
-import * as blazeface from "@tensorflow-models/blazeface";
+import { estimateFaces, loadBlazeface, preprocessImage } from "./blazeface";
+
+const draw = (image, ctx, canvas) => {
+  ctx.reset();
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.beginPath();
+  ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+  ctx.fill();
+};
 
 const App = (props) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  let faceRecognition;
+
+  const link = "https://tfhub.dev/tensorflow/tfjs-model/blazeface/1/default/1";
+  const blazefaceModel = loadBlazeface(link);
 
   const capture = React.useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
@@ -17,14 +27,6 @@ const App = (props) => {
     facingMode: "user",
   };
 
-  const draw = (image, ctx, canvas) => {
-    ctx.reset();
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.beginPath();
-    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    ctx.fill();
-  };
-
   useEffect(() => {
     const canvas = canvasRef.current;
 
@@ -32,25 +34,27 @@ const App = (props) => {
     let video = webcamRef.current.video;
 
     let animationFrameId;
-    let face;
-    faceRecognition = blazeface.load();
 
-    const detectFaces = async () => {
-      const face = await faceRecognition.estimateFaces(video, false);
-    };
-
-    const render = async () => {
-      draw(video, context, canvas);
+    const render = () => {
+      draw(capture, context, canvas);
+      // let image = preprocessImage(video);
+      // let face = estimateFaces(blazefaceModel, image);
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
 
     return () => window.cancelAnimationFrame(animationFrameId);
-  }, [draw]);
+  });
 
   return (
     <>
-      <Webcam audio={false} ref={webcamRef} width={0} height={0} />
+      <Webcam
+        audio={false}
+        screenshotFormat="HTMLImageElement"
+        ref={webcamRef}
+        width={0}
+        height={0}
+      />
       <canvas
         ref={canvasRef}
         width={videoConstraints.width}
