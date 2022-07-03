@@ -28,8 +28,6 @@ in the first time, you have to install all requirements, so :
 - react
 - react-camera
 - tfjs (a portability of tensorflow of javascript, used to launch our AI)
-- blazeface (an AI used to recuperate faces on camera, and after analyse it)
-
 ### `yarn run start`
 
 once you have installed all the requirements, you can type this command in the terminal.
@@ -47,4 +45,4 @@ repository. It is not necessary if you stay in local.
 - React : https://en.reactjs.org
 - Badges of the readme : https://github.com/aleen42/badges
 - tfjs : https://www.npmjs.com/package/@tensorflow/tfjs
-- blazeface : https://www.npmjs.com/package/@tensorflow-models/blazeface
+- the base I used to recognize faces on camera : https://github.com/lauirvin/react-use-face-detection 
