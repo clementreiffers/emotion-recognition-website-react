@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./stylesheet/index.css";
 import reportWebVitals from "./reportWebVitals";
-import App from "./App";
 import WebcamModified from "./components/WebcamModified";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

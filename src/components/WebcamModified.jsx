@@ -28,7 +28,6 @@ const WebcamModified = () => {
         }),
     });
   let canvasRef = useRef(null);
-  const canvasTestRef = useRef(null);
 
   const drawOnCanvas = (context, video, boundingBox) => {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -48,8 +47,6 @@ const WebcamModified = () => {
       heightBoundingBox * context.canvas.height
     );
 
-    let canvasTest = canvasTestRef.current;
-    let contextTest = canvasTest.getContext("2d");
     if (
       xCenterBoundingBox > 0 &&
       yCenterBoundingBox > 0 &&
@@ -64,7 +61,6 @@ const WebcamModified = () => {
       );
     }
 
-    // contextTest.drawImage(face, 0, 0, 50, 50);
     context.stroke();
   };
 
@@ -88,7 +84,6 @@ const WebcamModified = () => {
       <p>number of faces detected: {facesDetected}</p>
       <div>
         <canvas ref={canvasRef} style={cameraDisplayStyle} />
-        <canvas ref={canvasTestRef} style={cameraDisplayStyle} />
         <Webcam
           ref={webcamRef}
           forceScreenshotSourceSize
