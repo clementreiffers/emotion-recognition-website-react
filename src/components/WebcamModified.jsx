@@ -6,10 +6,8 @@ import { useEffect, useRef } from "react";
 import * as R from "ramda";
 
 const cameraDisplayStyle = {
-  height: "60%",
   width: "60%",
   position: "absolute",
-  // display: "none",
 };
 
 const WebcamModified = () => {
@@ -30,18 +28,43 @@ const WebcamModified = () => {
         }),
     });
   let canvasRef = useRef(null);
+  const canvasTestRef = useRef(null);
+
   const drawOnCanvas = (context, video, boundingBox) => {
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
     context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
     context.beginPath();
     context.lineWidth = "2";
     context.strokeStyle = "red";
+    const xCenterBoundingBox = R.pluck("xCenter", boundingBox);
+    const yCenterBoundingBox = R.pluck("yCenter", boundingBox);
+    const widthBoundingBox = R.pluck("width", boundingBox);
+    const heightBoundingBox = R.pluck("height", boundingBox);
+
     context.rect(
-      R.pluck("xCenter", boundingBox) * context.canvas.width,
-      R.pluck("yCenter", boundingBox) * context.canvas.height,
-      R.pluck("width", boundingBox) * context.canvas.width,
-      R.pluck("height", boundingBox) * context.canvas.height
+      xCenterBoundingBox * context.canvas.width,
+      yCenterBoundingBox * context.canvas.height,
+      widthBoundingBox * context.canvas.width,
+      heightBoundingBox * context.canvas.height
     );
+
+    let canvasTest = canvasTestRef.current;
+    let contextTest = canvasTest.getContext("2d");
+    if (
+      xCenterBoundingBox > 0 &&
+      yCenterBoundingBox > 0 &&
+      widthBoundingBox > 0 &&
+      heightBoundingBox > 0
+    ) {
+      let face = context.getImageData(
+        R.pluck("xCenter", boundingBox) * context.canvas.width,
+        R.pluck("yCenter", boundingBox) * context.canvas.height,
+        R.pluck("width", boundingBox) * context.canvas.width,
+        R.pluck("height", boundingBox) * context.canvas.height
+      );
+    }
+
+    // contextTest.drawImage(face, 0, 0, 50, 50);
     context.stroke();
   };
 
@@ -65,6 +88,7 @@ const WebcamModified = () => {
       <p>number of faces detected: {facesDetected}</p>
       <div>
         <canvas ref={canvasRef} style={cameraDisplayStyle} />
+        <canvas ref={canvasTestRef} style={cameraDisplayStyle} />
         <Webcam
           ref={webcamRef}
           forceScreenshotSourceSize
