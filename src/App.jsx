@@ -36,7 +36,7 @@ const App = (props) => {
     let animationFrameId;
 
     const render = () => {
-      draw(capture, context, canvas);
+      draw(video, context, canvas);
       // let image = preprocessImage(video);
       // let face = estimateFaces(blazefaceModel, image);
       animationFrameId = window.requestAnimationFrame(render);
