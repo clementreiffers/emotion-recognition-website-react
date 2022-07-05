@@ -79,8 +79,6 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
           yCenterBoundingBox * context.canvas.height,
           widthBoundingBox * context.canvas.width
         );
-        // results.innerHTML = magnifyResults(emotions)(prediction);
-        // results = magnifyResults()
         tfImage.dispose();
       });
       // Check tensor memory leak stop
@@ -88,10 +86,6 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
     }
   }
 };
-
-const getIndexOfMax = R.indexOf(Math.max);
-
-const getBestEmotion = (pred) => emotions[getIndexOfMax(pred)];
 
 const getPercentage = R.pipe(R.multiply(100), parseInt);
 
@@ -102,8 +96,6 @@ const getEmotionNearToItsScore = (listOfEmotions) => (pred) =>
 
 const getListOfEmotionsSorted = R.sortBy(R.prop(1));
 
-const magnifyOnePrediction = R.pipe(R.join(""));
-
 const magnifyResults = (listOfEmotions) =>
   R.pipe(
     getScoreInPercentage,
@@ -113,9 +105,6 @@ const magnifyResults = (listOfEmotions) =>
     R.nth(0),
     R.append(" %"),
     R.join("")
-    // R.take(3),
-    // R.map(magnifyOnePrediction),
-    // R.join("")
   );
 
 const WebcamModified = () => {
@@ -136,7 +125,6 @@ const WebcamModified = () => {
         }),
     });
   let canvasRef = useRef(null);
-  let results;
 
   const [model, setModel] = useState();
   const loadModel = async (link) => {
