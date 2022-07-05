@@ -12,6 +12,16 @@ const cameraDisplayStyle = {
   position: "absolute",
 };
 
+const emotions = [
+  "😡 angry : ",
+  "🤮 disgust : ",
+  "😨 fear : ",
+  "😄 happy : ",
+  "😐 neutral : ",
+  "😭 sad : ",
+  "😯 surprise : ",
+];
+
 const link =
   "https://raw.githubusercontent.com/Im-Rises/emotion-recognition-website/main/resnet50js_ferplus/model.json";
 
@@ -46,10 +56,10 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
     heightBoundingBox > 0
   ) {
     let face = context.getImageData(
-      R.pluck("xCenter", boundingBox) * context.canvas.width,
-      R.pluck("yCenter", boundingBox) * context.canvas.height,
-      R.pluck("width", boundingBox) * context.canvas.width,
-      R.pluck("height", boundingBox) * context.canvas.height
+      xCenterBoundingBox * context.canvas.width,
+      yCenterBoundingBox * context.canvas.height,
+      widthBoundingBox * context.canvas.width,
+      heightBoundingBox * context.canvas.height
     );
     if (typeof emotionRecognizer != "undefined") {
       tf.engine().startScope();
@@ -61,9 +71,16 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
         let prediction = Array.from(
           emotionRecognizer.predict(tfResizedImage).dataSync()
         );
-        // currentEmotion = getBestEmotion(prediction);
+        const currentEmotion = magnifyResults(emotions)(prediction);
+        context.font = "48px serif";
+        context.fillText(
+          currentEmotion,
+          xCenterBoundingBox * context.canvas.width,
+          yCenterBoundingBox * context.canvas.height,
+          widthBoundingBox * context.canvas.width
+        );
         // results.innerHTML = magnifyResults(emotions)(prediction);
-        console.log(prediction);
+        // results = magnifyResults()
         tfImage.dispose();
       });
       // Check tensor memory leak stop
@@ -71,6 +88,35 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
     }
   }
 };
+
+const getIndexOfMax = R.indexOf(Math.max);
+
+const getBestEmotion = (pred) => emotions[getIndexOfMax(pred)];
+
+const getPercentage = R.pipe(R.multiply(100), parseInt);
+
+const getScoreInPercentage = R.map(getPercentage);
+
+const getEmotionNearToItsScore = (listOfEmotions) => (pred) =>
+  R.transpose([listOfEmotions, pred]);
+
+const getListOfEmotionsSorted = R.sortBy(R.prop(1));
+
+const magnifyOnePrediction = R.pipe(R.join(""));
+
+const magnifyResults = (listOfEmotions) =>
+  R.pipe(
+    getScoreInPercentage,
+    getEmotionNearToItsScore(listOfEmotions),
+    getListOfEmotionsSorted,
+    R.reverse,
+    R.nth(0),
+    R.append(" %"),
+    R.join("")
+    // R.take(3),
+    // R.map(magnifyOnePrediction),
+    // R.join("")
+  );
 
 const WebcamModified = () => {
   const { webcamRef, boundingBox, isLoading, detected, facesDetected } =
@@ -90,6 +136,7 @@ const WebcamModified = () => {
         }),
     });
   let canvasRef = useRef(null);
+  let results;
 
   const [model, setModel] = useState();
   const loadModel = async (link) => {
