@@ -156,16 +156,21 @@ const WebcamModified = () => {
     <div>
       <div
         style={{
+          textAlign: "center",
+          fontSize: "300%",
           position: "absolute",
           color: "black",
-          // backgroundColor: "white",
+          backgroundColor: "white",
           borderBottomRightRadius: "20px",
           padding: "2%",
           opacity: 0.7,
         }}
       >
-        {/*<p>face detected: {detected ? "YES" : "NO"}</p>*/}
-        {/*<p>number of faces detected: {facesDetected}</p>*/}
+        {typeof model === "undefined" ? (
+          <p>loading, please wait ...</p>
+        ) : (
+          <p>Emotion Recognition </p>
+        )}
       </div>
       <div>
         <canvas
