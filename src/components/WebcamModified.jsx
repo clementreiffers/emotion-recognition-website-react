@@ -76,13 +76,24 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
           emotionRecognizer.predict(tfResizedImage).dataSync()
         );
         const currentEmotion = magnifyResults(emotions)(prediction);
-        context.font = "48px serif";
+        context.fillStyle = "#FFFFFF";
+        const size = 50;
+        context.fillRect(
+          xCenterBoundingBox * context.canvas.width,
+          yCenterBoundingBox * context.canvas.height - size,
+          widthBoundingBox * context.canvas.width,
+          size
+        );
+        context.font = size + "px serif";
+        context.fillStyle = "#000000";
+        context.stroke();
         context.fillText(
           currentEmotion,
           xCenterBoundingBox * context.canvas.width,
           yCenterBoundingBox * context.canvas.height,
           widthBoundingBox * context.canvas.width
         );
+
         tfImage.dispose();
       });
       // Check tensor memory leak stop
@@ -163,20 +174,23 @@ const WebcamModified = () => {
       prevState === "user" ? "environnement" : "user"
     );
   }, []);
+
   return (
     <div>
       <div
-        style={{
-          textAlign: "center",
-          fontSize: "300%",
-          position: "fixed",
-          zIndex: 2,
-          color: "black",
-          backgroundColor: "white",
-          borderBottomRightRadius: "20px",
-          padding: "2%",
-          opacity: 0.7,
-        }}
+        style={
+          {
+            // textAlign: "center",
+            // fontSize: "300%",
+            // position: "fixed",
+            // zIndex: 2,
+            // color: "black",
+            // backgroundColor: "white",
+            // borderBottomRightRadius: "20px",
+            // padding: "2%",
+            // opacity: 0.7,
+          }
+        }
       >
         {typeof model === "undefined" ? (
           <p>loading, please wait ...</p>
@@ -200,9 +214,10 @@ const WebcamModified = () => {
           // style={{ display: "none" }}
         />
         <Webcam
-          ref={webcamRef}
+          audio={false}
           width={1920}
           height={1080}
+          ref={webcamRef}
           videoConstraints={{ ...videoConstraints, facingMode }}
           style={{ display: "none" }}
         />
