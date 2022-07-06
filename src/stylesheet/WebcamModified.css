@@ -1,3 +1,24 @@
 body {
     margin: 0;
 }
+
+.canvas {
+    position: relative;
+    width: 100%;
+}
+
+@media only screen and (max-device-width: 640px) {
+    .canvas {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-device-width: 768px) {
+    .canvas {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+}

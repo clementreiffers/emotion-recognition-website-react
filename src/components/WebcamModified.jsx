@@ -2,7 +2,7 @@ import Webcam from "react-webcam";
 import { useFaceDetection } from "react-use-face-detection";
 import FaceDetection from "@mediapipe/face_detection";
 import { Camera } from "@mediapipe/camera_utils";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as R from "ramda";
 import * as tf from "@tensorflow/tfjs";
 import "../stylesheet/WebcamModified.css";
@@ -10,6 +10,10 @@ import "../stylesheet/WebcamModified.css";
 const cameraDisplayStyle = {
   width: "60%",
   position: "absolute",
+};
+
+const videoConstraints = {
+  facingMode: "user",
 };
 
 const emotions = [
@@ -23,7 +27,7 @@ const emotions = [
 ];
 
 const link =
-  "https://raw.githubusercontent.com/Im-Rises/emotion-recognition-website/main/resnet50js_ferplus/model.json";
+  "https://raw.githubusercontent.com/clementreiffers/emotion-recognition-website/main/resnet50js_ferplus/model.json";
 
 const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
@@ -151,14 +155,22 @@ const WebcamModified = () => {
     render();
     return () => window.cancelAnimationFrame(animationFrameId);
   });
+  const [facingMode, setFacingMode] = React.useState("user");
 
+  const handleClick = React.useCallback(() => {
+    console.log("je change de camera");
+    setFacingMode((prevState) =>
+      prevState === "user" ? "environnement" : "user"
+    );
+  }, []);
   return (
     <div>
       <div
         style={{
           textAlign: "center",
           fontSize: "300%",
-          position: "absolute",
+          position: "fixed",
+          zIndex: 2,
           color: "black",
           backgroundColor: "white",
           borderBottomRightRadius: "20px",
@@ -169,7 +181,13 @@ const WebcamModified = () => {
         {typeof model === "undefined" ? (
           <p>loading, please wait ...</p>
         ) : (
-          <p>Emotion Recognition </p>
+          <p>
+            Emotion Recognition
+            <br />
+            <button onClick={handleClick} style={{ fontSize: "110%" }}>
+              Switch camera
+            </button>
+          </p>
         )}
       </div>
       <div>
@@ -177,6 +195,7 @@ const WebcamModified = () => {
           ref={canvasRef}
           width={1920}
           height={1080}
+          className="canvas"
           // style={cameraDisplayStyle}
           // style={{ display: "none" }}
         />
@@ -184,6 +203,7 @@ const WebcamModified = () => {
           ref={webcamRef}
           width={1920}
           height={1080}
+          videoConstraints={{ ...videoConstraints, facingMode }}
           style={{ display: "none" }}
         />
       </div>
