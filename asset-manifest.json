@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/emotion-recognition-website-react/static/css/main.e22da35d.css",
-    "main.js": "/emotion-recognition-website-react/static/js/main.9a3b6579.js",
+    "main.css": "/emotion-recognition-website-react/static/css/main.0f27b410.css",
+    "main.js": "/emotion-recognition-website-react/static/js/main.f16745fb.js",
     "static/js/787.a6852239.chunk.js": "/emotion-recognition-website-react/static/js/787.a6852239.chunk.js",
     "index.html": "/emotion-recognition-website-react/index.html",
-    "main.e22da35d.css.map": "/emotion-recognition-website-react/static/css/main.e22da35d.css.map",
-    "main.9a3b6579.js.map": "/emotion-recognition-website-react/static/js/main.9a3b6579.js.map",
+    "main.0f27b410.css.map": "/emotion-recognition-website-react/static/css/main.0f27b410.css.map",
+    "main.f16745fb.js.map": "/emotion-recognition-website-react/static/js/main.f16745fb.js.map",
     "787.a6852239.chunk.js.map": "/emotion-recognition-website-react/static/js/787.a6852239.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e22da35d.css",
-    "static/js/main.9a3b6579.js"
+    "static/css/main.0f27b410.css",
+    "static/js/main.f16745fb.js"
   ]
 }
