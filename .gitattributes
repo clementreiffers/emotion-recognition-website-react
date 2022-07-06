@@ -1,0 +1,3 @@
+# When commiting to the remote repository all files are stored with end of file LF.
+
+* text=auto eol=crlf
