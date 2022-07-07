@@ -166,7 +166,7 @@ const WebcamModified = () => {
     render();
     return () => window.cancelAnimationFrame(animationFrameId);
   });
-  const [facingMode, setFacingMode] = React.useState("user");
+  const [facingMode, setFacingMode] = React.useState("environnement");
 
   const handleClick = React.useCallback(() => {
     console.log("je change de camera");
@@ -177,46 +177,33 @@ const WebcamModified = () => {
 
   return (
     <div>
-      <div
-        style={
-          {
-            // textAlign: "center",
-            // fontSize: "300%",
-            // position: "fixed",
-            // zIndex: 2,
-            // color: "black",
-            // backgroundColor: "white",
-            // borderBottomRightRadius: "20px",
-            // padding: "2%",
-            // opacity: 0.7,
-          }
-        }
-      >
+      <div className="info">
         {typeof model === "undefined" ? (
-          <p>loading, please wait ...</p>
+          <p style={{ color: "red" }}>loading, please wait ...</p>
         ) : (
           <p>
             Emotion Recognition
             <br />
-            <button onClick={handleClick} style={{ fontSize: "110%" }}>
-              Switch camera
-            </button>
+            <a href="https://github.com/clementreiffers/emotion-recognition-website-react">
+              github repository
+            </a>
           </p>
         )}
+        <button onClick={handleClick}>switch camera</button>
       </div>
       <div>
         <canvas
           ref={canvasRef}
           width={1920}
           height={1080}
+          style={{ objectFit: "cover" }}
           className="canvas"
-          // style={cameraDisplayStyle}
-          // style={{ display: "none" }}
         />
         <Webcam
           audio={false}
           width={1920}
           height={1080}
+          mirrored={true}
           ref={webcamRef}
           videoConstraints={{ ...videoConstraints, facingMode }}
           style={{ display: "none" }}

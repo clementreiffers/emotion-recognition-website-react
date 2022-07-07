@@ -8,18 +8,29 @@ body {
     width: 100%;
 }
 
+.info {
+    text-align: center;
+    font-size: 200%;
+    position: fixed;
+    z-index: 2;
+    color: black;
+    background-color: white;
+    border-bottom-right-radius: 20px;
+    padding: 2%;
+    opacity: 0.7;
+}
+
+.info button{
+    border-radius: 40px;
+    font-size: 110%;
+}
+
 @media only screen and (max-device-width: 640px) {
-    .canvas {
-        position: fixed;
-        height: 100%;
-        width: 100%;
-    }
 }
 
 @media only screen and (max-device-width: 768px) {
-    .canvas {
-        position: fixed;
-        height: 100%;
-        width: 100%;
+    .info{
+        font-size: 120%;
     }
+
 }
