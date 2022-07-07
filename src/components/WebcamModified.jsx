@@ -179,7 +179,7 @@ const WebcamModified = () => {
     <div>
       <div className="info">
         {typeof model === "undefined" ? (
-          <p>loading, please wait ...</p>
+          <p style={{ color: "red" }}>loading, please wait ...</p>
         ) : (
           <p>
             Emotion Recognition
@@ -187,11 +187,9 @@ const WebcamModified = () => {
             <a href="https://github.com/clementreiffers/emotion-recognition-website-react">
               github repository
             </a>
-            <br />
-            <br />
-            <button onClick={handleClick}>switch camera</button>
           </p>
         )}
+        <button onClick={handleClick}>switch camera</button>
       </div>
       <div>
         <canvas
@@ -200,8 +198,6 @@ const WebcamModified = () => {
           height={1080}
           style={{ objectFit: "cover" }}
           className="canvas"
-          // style={cameraDisplayStyle}
-          // style={{ display: "none" }}
         />
         <Webcam
           audio={false}
