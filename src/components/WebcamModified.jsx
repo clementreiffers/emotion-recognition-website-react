@@ -207,6 +207,7 @@ const WebcamModified = () => {
           audio={false}
           width={1920}
           height={1080}
+          mirrored={true}
           ref={webcamRef}
           videoConstraints={{ ...videoConstraints, facingMode }}
           style={{ display: "none" }}
