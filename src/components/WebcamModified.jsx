@@ -7,11 +7,6 @@ import * as R from "ramda";
 import * as tf from "@tensorflow/tfjs";
 import "../stylesheet/WebcamModified.css";
 
-const cameraDisplayStyle = {
-  width: "60%",
-  position: "absolute",
-};
-
 const videoConstraints = {
   facingMode: "user",
 };
@@ -123,22 +118,21 @@ const magnifyResults = (listOfEmotions) =>
   );
 
 const WebcamModified = () => {
-  const { webcamRef, boundingBox, isLoading, detected, facesDetected } =
-    useFaceDetection({
-      faceDetectionOptions: {
-        model: "short",
-      },
-      faceDetection: new FaceDetection.FaceDetection({
-        locateFile: (file) =>
-          `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
+  const { webcamRef, boundingBox } = useFaceDetection({
+    faceDetectionOptions: {
+      model: "short",
+    },
+    faceDetection: new FaceDetection.FaceDetection({
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`,
+    }),
+    camera: ({ mediaSrc, onFrame, width, height }) =>
+      new Camera(mediaSrc, {
+        onFrame,
+        width,
+        height,
       }),
-      camera: ({ mediaSrc, onFrame, width, height }) =>
-        new Camera(mediaSrc, {
-          onFrame,
-          width,
-          height,
-        }),
-    });
+  });
   let canvasRef = useRef(null);
 
   const [model, setModel] = useState();
@@ -166,12 +160,11 @@ const WebcamModified = () => {
     render();
     return () => window.cancelAnimationFrame(animationFrameId);
   });
-  const [facingMode, setFacingMode] = React.useState("environnement");
+  const [facingMode, setFacingMode] = React.useState("environment");
 
   const handleClick = React.useCallback(() => {
-    console.log("je change de camera");
     setFacingMode((prevState) =>
-      prevState === "user" ? "environnement" : "user"
+      prevState === "user" ? "environment" : "user"
     );
   }, []);
 
