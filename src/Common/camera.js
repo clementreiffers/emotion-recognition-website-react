@@ -1,4 +1,4 @@
-const changeFacingMode = (facingMode, setFacingMode) =>
-  setFacingMode(facingMode === "user" ? "environment" : "user");
+const changeFacingMode = (facingMode) =>
+  facingMode === "user" ? "environment" : "user";
 
 export { changeFacingMode };

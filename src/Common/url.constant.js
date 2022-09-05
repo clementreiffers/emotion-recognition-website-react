@@ -4,4 +4,7 @@ const URL_EMOTION_RECOGNITION_MODEL: string =
 const URL_JS_DELIVR: string =
   "https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/";
 
-export { URL_EMOTION_RECOGNITION_MODEL, URL_JS_DELIVR };
+const URL_GITHUB_CODE_SOURCE: string =
+  "https://github.com/clementreiffers/emotion-recognition-website-react";
+
+export { URL_EMOTION_RECOGNITION_MODEL, URL_JS_DELIVR, URL_GITHUB_CODE_SOURCE };

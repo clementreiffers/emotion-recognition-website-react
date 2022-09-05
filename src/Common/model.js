@@ -1,15 +1,16 @@
 import * as tf from "@tensorflow/tfjs";
 
-const loadModel = async (link: string, setModel: Function) => {
+const loadModel = async (link: string, setState: Function, state) => {
   try {
-    if (typeof model === "undefined") {
-      const fetchModel = await tf.loadLayersModel(link);
-      setModel(fetchModel);
-      console.log("load model success");
-    }
+    setState({
+      ...state,
+      model: await tf.loadLayersModel(link),
+      isModelSet: true,
+    });
   } catch (err) {
     console.log(err);
   }
+  console.log("load model success");
 };
 
 export { loadModel };

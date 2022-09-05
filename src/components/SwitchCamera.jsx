@@ -1,18 +1,15 @@
 import React from "react";
+import { Loading } from "./Loading";
+import { GithubLink } from "./GithubLink";
 
-const switchCamera = (props: { handleClick: Function, model: any }) => (
+type switchCameraProps = {
+  handleClick: Function,
+  isModelLoaded: boolean,
+};
+
+const switchCamera = (props: switchCameraProps) => (
   <div className="info">
-    {typeof props.model === "undefined" ? (
-      <p style={{ color: "red" }}>loading, please wait ...</p>
-    ) : (
-      <p>
-        Emotion Recognition
-        <br />
-        <a href="https://github.com/clementreiffers/emotion-recognition-website-react">
-          github repository
-        </a>
-      </p>
-    )}
+    {!props.isModelLoaded ? <Loading /> : <GithubLink />}
     <button onClick={props.handleClick}>switch camera</button>
   </div>
 );
