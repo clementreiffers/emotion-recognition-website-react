@@ -24,11 +24,6 @@ const App = () => {
 
   const [state, setState]: [stateType, Function] = useState(_init_state);
 
-  // MODEL EMOTION RECOGNITION
-  tf.ready().then(() =>
-    loadModel(URL_EMOTION_RECOGNITION_MODEL, setState, state)
-  );
-
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     let animationFrameId;
@@ -37,8 +32,16 @@ const App = () => {
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
-    return () => window.cancelAnimationFrame(animationFrameId);
+
+    return window.cancelAnimationFrame(animationFrameId);
   });
+
+  useEffect(() => {
+    // MODEL EMOTION RECOGNITION
+    tf.ready().then(() =>
+      loadModel(URL_EMOTION_RECOGNITION_MODEL, setState, state)
+    );
+  }, []);
 
   const handleClick = React.useCallback(() => {
     setState({
