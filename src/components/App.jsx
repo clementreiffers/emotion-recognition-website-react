@@ -32,9 +32,8 @@ const App = () => {
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
-
     return window.cancelAnimationFrame(animationFrameId);
-  });
+  }, [canvasRef, webcamRef, boundingBox, state]);
 
   useEffect(() => {
     // MODEL EMOTION RECOGNITION

@@ -23,12 +23,12 @@ const _drawRect = (context, boundingBox) => {
   context.stroke();
 };
 
-const _getFace = (context, boundingBoxRefact) =>
+const _getFace = (context, boundingBox) =>
   context.getImageData(
-    boundingBoxRefact.xCenter * context.canvas.width,
-    boundingBoxRefact.yCenter * context.canvas.height,
-    boundingBoxRefact.width * context.canvas.width,
-    boundingBoxRefact.height * context.canvas.height
+    boundingBox.xCenter * context.canvas.width,
+    boundingBox.yCenter * context.canvas.height,
+    boundingBox.width * context.canvas.width,
+    boundingBox.height * context.canvas.height
   );
 
 const _predict = (model, tfResizedImage) => {
