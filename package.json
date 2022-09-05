@@ -4,8 +4,13 @@
   "private": true,
   "homepage": "https://clementreiffers.github.io/emotion-recognition-website-react",
   "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@mediapipe/camera_utils": "^0.3.1640029074",
     "@mediapipe/face_detection": "^0.4.1646425229",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.3",
+    "@mui/styled-engine": "^5.10.3",
     "@tensorflow/tfjs": "^3.18.0",
     "@tensorflow/tfjs-converter": "1.7.4",
     "@tensorflow/tfjs-core": "1.7.4",

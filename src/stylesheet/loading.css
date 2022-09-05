@@ -1,0 +1,13 @@
+@keyframes rotation {
+    from {
+        transform: rotate(359deg);
+    }
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+.loading-icon {
+    animation: rotation 2s infinite linear;
+    vertical-align: middle;
+}
