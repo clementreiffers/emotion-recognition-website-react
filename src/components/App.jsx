@@ -2,11 +2,11 @@ import { useFaceDetection } from "react-use-face-detection";
 import React, { useEffect, useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import "../stylesheet/WebcamModified.css";
-import { URL_EMOTION_RECOGNITION_MODEL } from "../Common/url.constant";
+import { URL_EMOTION_RECOGNITION_MODEL } from "../Constants/url.constant";
 import drawOnCanvas from "../Common/canvas";
 import VideoOnCanvas from "./VideoOnCanvas";
 import SwitchCamera from "./SwitchCamera";
-import { FACE_DETECTION_PROPS } from "../Common/faceDetection.constant";
+import { FACE_DETECTION_PROPS } from "../Constants/faceDetection.constant";
 import { loadModel } from "../Common/model";
 import { changeFacingMode } from "../Common/camera";
 

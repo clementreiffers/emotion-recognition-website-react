@@ -1,5 +1,5 @@
 import Webcam from "react-webcam";
-import { VIDEO_CONSTRAINTS } from "../Common/video.constant";
+import { VIDEO_CONSTRAINTS } from "../Constants/video.constant";
 import React from "react";
 
 type videoOnCanvasProps = {
