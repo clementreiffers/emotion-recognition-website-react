@@ -6,13 +6,6 @@ import {
   RESIZE_SHAPE,
 } from "../Constants/emotionRecognizer.constant";
 
-const _getValuesOfBoundingBox = R.applySpec({
-  xCenter: R.pluck("xCenter"),
-  yCenter: R.pluck("yCenter"),
-  width: R.pluck("width"),
-  height: R.pluck("height"),
-});
-
 const _drawRect = (context, boundingBox) => {
   // rectangle draw all around the face
   context.beginPath();
