@@ -101,23 +101,22 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
 
   context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
 
-  // recuperation of all values into boundingBox (coordinate of face)
-  const boundingBoxRefact = _getValuesOfBoundingBox(boundingBox);
+  for (let bb of boundingBox) {
+    // recuperation of all values into boundingBox (coordinate of face)
+    _drawRect(context, bb);
+    // recuperation of face only if boundingBox has valuable coordinates
+    if (_isBoundingBoxPositive(bb)) {
+      let face = _getFace(context, bb);
 
-  _drawRect(context, boundingBoxRefact);
-  // recuperation of face only if boundingBox has valuable coordinates
-  if (_isBoundingBoxPositive(boundingBoxRefact)) {
-    let face = _getFace(context, boundingBoxRefact);
-
-    if (typeof emotionRecognizer != "undefined") {
-      tf.engine().startScope();
-      tf.tidy(() => {
-        // Conversion to tensor4D and resize
-        let prediction = _predict(emotionRecognizer, _treatImg(face));
-        _drawEmotionPanel(context, boundingBoxRefact, prediction);
-      });
-      // Check tensor memory leak stop
-      tf.engine().endScope();
+      if (typeof emotionRecognizer != "undefined") {
+        tf.engine().startScope();
+        tf.tidy(() => {
+          let prediction = _predict(emotionRecognizer, _treatImg(face));
+          _drawEmotionPanel(context, bb, prediction);
+        });
+        // Check tensor memory leak stop
+        tf.engine().endScope();
+      }
     }
   }
 };
