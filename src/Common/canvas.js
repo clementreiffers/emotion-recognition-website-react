@@ -1,6 +1,10 @@
 import * as R from "ramda";
 import * as tf from "@tensorflow/tfjs";
-import { EMOTIONS } from "../Constants/emotions.constant";
+import {
+  EMOTIONS,
+  PRED_RESIZE_SHAPE,
+  RESIZE_SHAPE,
+} from "../Constants/emotionRecognizer.constant";
 
 const _getValuesOfBoundingBox = R.applySpec({
   xCenter: R.pluck("xCenter"),
@@ -38,7 +42,7 @@ const _predict = (model, tfResizedImage) => {
 };
 
 const _resizeImg = (img) =>
-  tf.image.resizeBilinear(img, [80, 80]).reshape([1, 80, 80, 3]);
+  tf.image.resizeBilinear(img, RESIZE_SHAPE).reshape(PRED_RESIZE_SHAPE);
 
 const _convertImgToTensor = (img) =>
   tf.browser.fromPixels(img, 3).expandDims(0);
@@ -97,7 +101,7 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
 
   context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
 
-  // recuperation of all values into boudingBox (coordinate of face)
+  // recuperation of all values into boundingBox (coordinate of face)
   const boundingBoxRefact = _getValuesOfBoundingBox(boundingBox);
 
   _drawRect(context, boundingBoxRefact);

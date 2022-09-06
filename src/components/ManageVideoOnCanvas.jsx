@@ -18,7 +18,7 @@ const _init_state = {
   isModelSet: false,
 };
 
-const App = () => {
+const ManageVideoOnCanvas = () => {
   const { webcamRef, boundingBox } = useFaceDetection(FACE_DETECTION_PROPS);
   let canvasRef = useRef(null);
 
@@ -64,4 +64,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default ManageVideoOnCanvas;
