@@ -1,45 +1,58 @@
 import { predict } from "./tensorflowPredictions";
+import {
+  EMOTION_PANEL_BG_COLOR,
+  EMOTION_PANEL_COLOR,
+  SIZE_EMOTION_PANEL,
+} from "../Constants/canvas.constant";
+
+const _setRectStyle = (context) => {
+  context.lineWidth = "0.8";
+  context.strokeStyle = "red";
+};
 
 const _drawRect = (context, boundingBox) => {
   // rectangle draw all around the face
   context.beginPath();
-  context.lineWidth = "0.8";
-  context.strokeStyle = "red";
-  context.rect(
-    boundingBox.xCenter * context.canvas.width,
-    boundingBox.yCenter * context.canvas.height,
-    boundingBox.width * context.canvas.width,
-    boundingBox.height * context.canvas.height
-  );
+  _setRectStyle(context);
+  const { x, y, width } = _getRectDim(boundingBox, context);
+  const height = boundingBox.height * context.canvas.height;
+  context.rect(x, y, width, height);
   context.stroke();
 };
 
-const _getFace = (context, boundingBox) =>
-  context.getImageData(
-    boundingBox.xCenter * context.canvas.width,
-    boundingBox.yCenter * context.canvas.height,
-    boundingBox.width * context.canvas.width,
-    boundingBox.height * context.canvas.height
-  );
+const _getFace = (context, boundingBox) => {
+  const { x, y, width } = _getRectDim(boundingBox, context);
+  const height = boundingBox.height * context.canvas.height;
+  return context.getImageData(x, y, width, height);
+};
+const _setFillStyle = (context, color) => (context.fillStyle = color);
+
+const _getRectDim = (boundingBox, context) => {
+  const x = boundingBox.xCenter * context.canvas.width;
+  const y = boundingBox.yCenter * context.canvas.height - SIZE_EMOTION_PANEL;
+  const width = boundingBox.width * context.canvas.width;
+  return { x, y, width };
+};
+
+const _drawPanel = (context, boundingBox) => {
+  const { x, y, width } = _getRectDim(boundingBox, context);
+  context.fillRect(x, y, width, SIZE_EMOTION_PANEL);
+};
+
+const _setFont = (context) => (context.font = SIZE_EMOTION_PANEL + "px serif");
+
+const _drawText = (context, text, boundingBox) => {
+  const { x, y, width } = _getRectDim(boundingBox, context);
+  context.stroke();
+  context.fillText(text, x, y, width);
+};
 
 const _drawEmotionPanel = (context, boundingBox, prediction) => {
-  context.fillStyle = "#FFFFFF";
-  const size = 50;
-  context.fillRect(
-    boundingBox.xCenter * context.canvas.width,
-    boundingBox.yCenter * context.canvas.height - size,
-    boundingBox.width * context.canvas.width,
-    size
-  );
-  context.font = size + "px serif";
-  context.fillStyle = "#000000";
-  context.stroke();
-  context.fillText(
-    prediction,
-    boundingBox.xCenter * context.canvas.width,
-    boundingBox.yCenter * context.canvas.height,
-    boundingBox.width * context.canvas.width
-  );
+  _setFillStyle(context, EMOTION_PANEL_BG_COLOR);
+  _drawPanel(context, boundingBox);
+  _setFont(context);
+  _setFillStyle(context, EMOTION_PANEL_COLOR);
+  _drawText(context, prediction, boundingBox);
 };
 
 const _isBoundingBoxPositive = (boundingBox) =>
