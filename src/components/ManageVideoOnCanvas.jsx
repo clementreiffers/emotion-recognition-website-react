@@ -7,7 +7,7 @@ import drawOnCanvas from "../Common/canvas";
 import VideoOnCanvas from "./VideoOnCanvas";
 import SwitchCamera from "./SwitchCamera";
 import { FACE_DETECTION_PROPS } from "../Constants/faceDetection.constant";
-import { loadModel } from "../Common/model";
+import { loadModel } from "../Common/tensorflowModel";
 import { changeFacingMode } from "../Common/camera";
 
 type stateType = { model: any, facingMode: string, isModelSet: boolean };
@@ -42,7 +42,7 @@ const ManageVideoOnCanvas = () => {
   }, [canvasRef, webcamRef, boundingBox, state]);
 
   useEffect(() => {
-    if (state.isModelSet) {
+    if (!state.isModelSet) {
       // MODEL EMOTION RECOGNITION
       tf.ready().then(() =>
         loadModel(URL_EMOTION_RECOGNITION_MODEL, setState, state)
