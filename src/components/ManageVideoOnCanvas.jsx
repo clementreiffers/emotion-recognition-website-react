@@ -28,7 +28,13 @@ const ManageVideoOnCanvas = () => {
     const context = canvasRef.current.getContext("2d");
     let animationFrameId;
     const render = () => {
-      drawOnCanvas(context, webcamRef.current.video, boundingBox, state.model);
+      drawOnCanvas(
+        state,
+        context,
+        webcamRef.current.video,
+        boundingBox,
+        state.model
+      );
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
@@ -36,11 +42,13 @@ const ManageVideoOnCanvas = () => {
   }, [canvasRef, webcamRef, boundingBox, state]);
 
   useEffect(() => {
-    // MODEL EMOTION RECOGNITION
-    tf.ready().then(() =>
-      loadModel(URL_EMOTION_RECOGNITION_MODEL, setState, state)
-    );
-  }, []);
+    if (state.isModelSet) {
+      // MODEL EMOTION RECOGNITION
+      tf.ready().then(() =>
+        loadModel(URL_EMOTION_RECOGNITION_MODEL, setState, state)
+      );
+    }
+  }, [state, setState]);
 
   const handleClick = React.useCallback(() => {
     setState({

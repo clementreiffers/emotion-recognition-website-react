@@ -28,10 +28,14 @@ const _getFace = (context, boundingBox) =>
     boundingBox.height * context.canvas.height
   );
 
-const _predict = (model, tfResizedImage) => {
-  let predict = Array.from(model.predict(tfResizedImage).dataSync());
-  tfResizedImage.dispose();
-  return predict;
+const _predict = (state, model, tfResizedImage) => {
+  if (state.isModelSet) {
+    let predict = Array.from(model.predict(tfResizedImage).dataSync());
+    tfResizedImage.dispose();
+    return magnifyResults(EMOTIONS)(predict);
+  } else {
+    return "❌ model not loaded yet";
+  }
 };
 
 const _resizeImg = (img) =>
@@ -43,7 +47,6 @@ const _convertImgToTensor = (img) =>
 const _treatImg = (img) => _resizeImg(_convertImgToTensor(img));
 
 const _drawEmotionPanel = (context, boundingBox, prediction) => {
-  const currentEmotion = magnifyResults(EMOTIONS)(prediction);
   context.fillStyle = "#FFFFFF";
   const size = 50;
   context.fillRect(
@@ -56,7 +59,7 @@ const _drawEmotionPanel = (context, boundingBox, prediction) => {
   context.fillStyle = "#000000";
   context.stroke();
   context.fillText(
-    currentEmotion,
+    prediction,
     boundingBox.xCenter * context.canvas.width,
     boundingBox.yCenter * context.canvas.height,
     boundingBox.width * context.canvas.width
@@ -89,7 +92,13 @@ const _isBoundingBoxPositive = (boundingBox) =>
   boundingBox.width > 0 &&
   boundingBox.height > 0;
 
-const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
+const drawOnCanvas = (
+  state,
+  context,
+  video,
+  boundingBox,
+  emotionRecognizer
+) => {
   context.clearRect(0, 0, context.canvas.width, context.canvas.height);
 
   context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
@@ -104,7 +113,7 @@ const drawOnCanvas = (context, video, boundingBox, emotionRecognizer) => {
       if (typeof emotionRecognizer != "undefined") {
         tf.engine().startScope();
         tf.tidy(() => {
-          let prediction = _predict(emotionRecognizer, _treatImg(face));
+          let prediction = _predict(state, emotionRecognizer, _treatImg(face));
           _drawEmotionPanel(context, bb, prediction);
         });
         // Check tensor memory leak stop
