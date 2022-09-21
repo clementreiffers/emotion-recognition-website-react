@@ -1,10 +1,4 @@
-import * as R from "ramda";
-import * as tf from "@tensorflow/tfjs";
-import {
-  EMOTIONS,
-  PRED_RESIZE_SHAPE,
-  RESIZE_SHAPE,
-} from "../Constants/emotionRecognizer.constant";
+import { predict } from "./tensorflowPredictions";
 
 const _drawRect = (context, boundingBox) => {
   // rectangle draw all around the face
@@ -28,24 +22,6 @@ const _getFace = (context, boundingBox) =>
     boundingBox.height * context.canvas.height
   );
 
-const _predict = (state, model, tfResizedImage) => {
-  if (state.isModelSet) {
-    let predict = Array.from(model.predict(tfResizedImage).dataSync());
-    tfResizedImage.dispose();
-    return magnifyResults(EMOTIONS)(predict);
-  } else {
-    return "❌ model not loaded yet";
-  }
-};
-
-const _resizeImg = (img) =>
-  tf.image.resizeBilinear(img, RESIZE_SHAPE).reshape(PRED_RESIZE_SHAPE);
-
-const _convertImgToTensor = (img) =>
-  tf.browser.fromPixels(img, 3).expandDims(0);
-
-const _treatImg = (img) => _resizeImg(_convertImgToTensor(img));
-
 const _drawEmotionPanel = (context, boundingBox, prediction) => {
   context.fillStyle = "#FFFFFF";
   const size = 50;
@@ -66,31 +42,24 @@ const _drawEmotionPanel = (context, boundingBox, prediction) => {
   );
 };
 
-const getPercentage = R.pipe(R.multiply(100), parseInt);
-
-const getScoreInPercentage = R.map(getPercentage);
-
-const getEmotionNearToItsScore = (listOfEmotions) => (pred) =>
-  R.transpose([listOfEmotions, pred]);
-
-const getListOfEmotionsSorted = R.sortBy(R.prop(1));
-
-const magnifyResults = (listOfEmotions) =>
-  R.pipe(
-    getScoreInPercentage,
-    getEmotionNearToItsScore(listOfEmotions),
-    getListOfEmotionsSorted,
-    R.reverse,
-    R.nth(0),
-    R.append(" %"),
-    R.join("")
-  );
-
 const _isBoundingBoxPositive = (boundingBox) =>
   boundingBox.xCenter > 0 &&
   boundingBox.yCenter > 0 &&
   boundingBox.width > 0 &&
   boundingBox.height > 0;
+
+const _clearCanvas = (context) =>
+  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+
+const _drawImage = (video, context) =>
+  context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
+
+const _drawPrediction = (context, bb, emotionRecognizer, state) =>
+  _drawEmotionPanel(
+    context,
+    bb,
+    predict(emotionRecognizer, state, _getFace(context, bb))
+  );
 
 const drawOnCanvas = (
   state,
@@ -99,26 +68,14 @@ const drawOnCanvas = (
   boundingBox,
   emotionRecognizer
 ) => {
-  context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-
-  context.drawImage(video, 0, 0, context.canvas.width, context.canvas.height);
-
+  _clearCanvas(context);
+  _drawImage(video, context);
   for (let bb of boundingBox) {
     // recuperation of all values into boundingBox (coordinate of face)
     _drawRect(context, bb);
     // recuperation of face only if boundingBox has valuable coordinates
-    if (_isBoundingBoxPositive(bb)) {
-      let face = _getFace(context, bb);
-
-      if (typeof emotionRecognizer != "undefined") {
-        tf.engine().startScope();
-        tf.tidy(() => {
-          let prediction = _predict(state, emotionRecognizer, _treatImg(face));
-          _drawEmotionPanel(context, bb, prediction);
-        });
-        // Check tensor memory leak stop
-        tf.engine().endScope();
-      }
+    if (_isBoundingBoxPositive(bb) && state.isModelSet) {
+      _drawPrediction(context, bb, emotionRecognizer, state);
     }
   }
 };
