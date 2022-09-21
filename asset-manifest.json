@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/emotion-recognition-website-react/static/css/main.c7544aeb.css",
-    "main.js": "/emotion-recognition-website-react/static/js/main.6621c0b0.js",
+    "main.js": "/emotion-recognition-website-react/static/js/main.b207269a.js",
     "static/js/787.a6852239.chunk.js": "/emotion-recognition-website-react/static/js/787.a6852239.chunk.js",
     "index.html": "/emotion-recognition-website-react/index.html",
     "main.c7544aeb.css.map": "/emotion-recognition-website-react/static/css/main.c7544aeb.css.map",
-    "main.6621c0b0.js.map": "/emotion-recognition-website-react/static/js/main.6621c0b0.js.map",
+    "main.b207269a.js.map": "/emotion-recognition-website-react/static/js/main.b207269a.js.map",
     "787.a6852239.chunk.js.map": "/emotion-recognition-website-react/static/js/787.a6852239.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.c7544aeb.css",
-    "static/js/main.6621c0b0.js"
+    "static/js/main.b207269a.js"
   ]
 }
