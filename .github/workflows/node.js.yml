@@ -28,4 +28,6 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm install --save-dev
+    - run: git config --global user.email "reiffersclement@gmail.com"
+    - run: git config --global user.name "clementreiffers"
     - run: npm run deploy
