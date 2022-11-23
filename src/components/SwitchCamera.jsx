@@ -10,10 +10,6 @@ type switchCameraProps = {
 
 const isVideoInput = ({ kind }) => kind === "videoinput";
 
-const isNotUndefined = R.has("kind");
-
-const removeUndefined = R.filter(isNotUndefined);
-
 const keepVideoDevices = (devices) =>
   devices.map((dev) => {
     if (isVideoInput(dev)) return dev;
