@@ -26,6 +26,7 @@ const ManageVideoOnCanvas = () => {
     facingMode: "user",
   });
 
+  console.log(constraints);
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     let animationFrameId;

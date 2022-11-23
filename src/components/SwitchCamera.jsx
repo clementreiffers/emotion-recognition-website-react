@@ -41,7 +41,7 @@ const SwitchCamera = (props: switchCameraProps) => {
         {devices.map((device, key) => (
           <button
             key={device.deviceId}
-            onClick={() => props.setConstraints(device.deviceId)}
+            onClick={() => props.setConstraints(device)}
           >
             {device.label || `Device ${key + 1}`}
           </button>
