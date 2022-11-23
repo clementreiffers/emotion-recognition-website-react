@@ -8,10 +8,12 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+permissions:
+  contents: write
 
 jobs:
-  build:
-
+  build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,14 +22,16 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm install
-    - run: npm install --save-dev
-    - run: git config --global user.email "reiffersclement@gmail.com"
-    - run: git config --global user.name "clementreiffers"
-    - run: npm run deploy
+      - name: Checkout 🔔
+        uses: actions/checkout@v3
+
+      - name: Install and Build ⚙️
+        uses: actions/setup-node@v3
+        run: |
+          yarn install
+          yarn build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
