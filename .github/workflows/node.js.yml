@@ -28,4 +28,4 @@ jobs:
         cache: 'npm'
     - run: npm install
     - run: npm install --save-dev
-    - run: npm deploy
+    - run: npm run deploy
