@@ -13,8 +13,8 @@ body {
     font-size: 200%;
     position: fixed;
     z-index: 2;
-    color: black;
-    background-color: white;
+    color: white;
+    background-color: black;
     border-bottom-right-radius: 20px;
     padding: 2%;
     opacity: 0.7;
@@ -23,6 +23,11 @@ body {
 .info button{
     border-radius: 40px;
     font-size: 110%;
+}
+
+.cameraSelector{
+    width:100%;
+    font-size: 80%;
 }
 
 @media only screen and (max-device-width: 640px) {

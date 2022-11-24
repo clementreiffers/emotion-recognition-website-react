@@ -24,14 +24,16 @@ const SwitchCamera = (props: switchCameraProps) => {
     <div className="info">
       {!props.isModelLoaded ? <Loading /> : <GithubLink />}
       <div>
-        {devices.map((device, key) => (
-          <button
-            key={device.deviceId}
-            onClick={() => props.setConstraints(device)}
-          >
-            {device.label || `Device ${key + 1}`}
-          </button>
-        ))}
+        <select className={"cameraSelector"}>
+          {devices.map((device, key) => (
+            <option
+              key={device.deviceId}
+              onClick={() => props.setConstraints(device)}
+            >
+              {device.label || `Device ${key + 1}`}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );
