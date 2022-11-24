@@ -1,11 +1,10 @@
 import Webcam from "react-webcam";
-import { VIDEO_CONSTRAINTS } from "../Constants/video.constant";
 import React from "react";
 
 type videoOnCanvasProps = {
   canvasRef: any,
   webcamRef: any,
-  facingMode: string,
+  constraints: any,
 };
 
 const VideoOnCanvas = (props: videoOnCanvasProps) => (
@@ -23,7 +22,7 @@ const VideoOnCanvas = (props: videoOnCanvasProps) => (
       height={1080}
       mirrored={true}
       ref={props.webcamRef}
-      videoConstraints={{ ...VIDEO_CONSTRAINTS, facingMode: props.facingMode }}
+      videoConstraints={props.constraints}
       style={{ display: "none" }}
     />
   </div>

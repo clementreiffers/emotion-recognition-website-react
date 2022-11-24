@@ -1,36 +1,38 @@
 import React, { useState } from "react";
 import { Loading } from "./Loading";
 import { GithubLink } from "./GithubLink";
-import * as R from "ramda";
 
 type switchCameraProps = {
-  handleClick: Function,
   isModelLoaded: boolean,
-};
-
-const isVideoInput = ({ kind }) => kind === "videoinput";
-
-const keepVideoDevices = (devices) =>
-  devices.map((dev) => {
-    if (isVideoInput(dev)) return dev;
-    return null;
-  });
-
-const getAllDevices = (setDevices) => {
-  navigator.mediaDevices
-    .enumerateDevices()
-    .then(R.pipe(keepVideoDevices, setDevices));
+  setConstraints: Function,
 };
 
 const SwitchCamera = (props: switchCameraProps) => {
-  const [devices, setDevices] = useState(null);
+  const [devices, setDevices] = useState([]);
 
-  getAllDevices(setDevices);
-  console.log(devices);
+  const handleDevices = React.useCallback(
+    (mediaDevices) =>
+      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
+    [setDevices]
+  );
+
+  React.useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then(handleDevices);
+  }, [handleDevices]);
+
   return (
     <div className="info">
       {!props.isModelLoaded ? <Loading /> : <GithubLink />}
-      <button onClick={props.handleClick}>switch camera</button>
+      <div>
+        {devices.map((device, key) => (
+          <button
+            key={device.deviceId}
+            onClick={() => props.setConstraints(device)}
+          >
+            {device.label || `Device ${key + 1}`}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
