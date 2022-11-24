@@ -8,7 +8,6 @@ import VideoOnCanvas from "./VideoOnCanvas";
 import SwitchCamera from "./SwitchCamera";
 import { FACE_DETECTION_PROPS } from "../Constants/faceDetection.constant";
 import { loadModel } from "../Common/tensorflowModel";
-import { changeFacingMode } from "../Common/camera";
 
 type stateType = { model: any, facingMode: string, isModelSet: boolean };
 
@@ -26,7 +25,6 @@ const ManageVideoOnCanvas = () => {
     facingMode: "user",
   });
 
-  console.log(constraints);
   useEffect(() => {
     const context = canvasRef.current.getContext("2d");
     let animationFrameId;
@@ -52,13 +50,6 @@ const ManageVideoOnCanvas = () => {
       );
     }
   }, [state, setState]);
-
-  // const handleClick = React.useCallback(() => {
-  //   setState({
-  //     ...state,
-  //     facingMode: changeFacingMode(state.facingMode),
-  //   });
-  // }, [state, setState]);
 
   return (
     <div>

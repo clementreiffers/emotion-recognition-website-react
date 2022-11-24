@@ -7,23 +7,9 @@ type switchCameraProps = {
   setConstraints: Function,
 };
 
-const isVideoInput = ({ kind }) => kind === "videoinput";
-
-const keepVideoInput = (mediaDevices) => mediaDevices.filter(isVideoInput);
-
 const SwitchCamera = (props: switchCameraProps) => {
   const [devices, setDevices] = useState([]);
 
-  // const keepAndSetMediaDevices = R.pipe(keepVideoInput, setDevices);
-  //
-  // const handleDevices = useCallback(keepAndSetMediaDevices, [
-  //   keepAndSetMediaDevices,
-  // ]);
-  //
-  // const getAndSetVideoInput = () =>
-  //   navigator.mediaDevices.enumerateDevices().then(handleDevices);
-  //
-  // useEffect(getAndSetVideoInput, [getAndSetVideoInput]);
   const handleDevices = React.useCallback(
     (mediaDevices) =>
       setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
