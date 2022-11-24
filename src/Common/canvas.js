@@ -44,7 +44,7 @@ const _setFont = (context) => (context.font = SIZE_EMOTION_PANEL + "px serif");
 const _drawText = (context, text, boundingBox) => {
   const { x, y, width } = _getRectDim(boundingBox, context);
   context.stroke();
-  context.fillText(text, x, y, width);
+  context.fillText(text, x, y + SIZE_EMOTION_PANEL, width);
 };
 
 const _drawEmotionPanel = (context, boundingBox, prediction) => {
