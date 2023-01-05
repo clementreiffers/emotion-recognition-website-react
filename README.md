@@ -1,7 +1,9 @@
 # emotion-recognition-website-react
 
-[![reactjs](badges/react.svg)](https://badges.aleen42.com/src/react.svg)
-[![javascript](badges/javascript.svg)](https://badges.aleen42.com/src/javascript.svg)
+[![reactjs](badges/react.svg)](https://en.reactjs.org)
+[![javascript](badges/javascript.svg)](https://developer.mozilla.org/fr/docs/Web/JavaScript)
+
+facial emotion recognition AI used in a website made with React
 
 ✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨✨
 
